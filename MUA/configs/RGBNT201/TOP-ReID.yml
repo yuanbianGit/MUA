@@ -1,0 +1,43 @@
+MODEL:
+  PRETRAIN_CHOICE: 'imagenet'
+  PRETRAIN_PATH_T: '../pretrainedModel/jx_vit_base_p16_224-80ecf9dd.pth'
+  TRANSFORMER_TYPE: 'vit_base_patch16_224'
+  STRIDE_SIZE: [ 16, 16 ]
+  SIE_CAMERA: True
+  RE: 1
+  RE_LAYER: 1
+  DIRECT: 0
+  DEVICE_ID: ('2')
+  G_CHANNEL: 3
+INPUT:
+  SIZE_TRAIN: [ 256, 128 ]
+  SIZE_TEST: [ 256, 128 ]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing
+  PADDING: 10
+DATALOADER:
+  SAMPLER: 'softmax_triplet'
+  NUM_INSTANCE: 8
+  NUM_WORKERS : 4
+
+DATASETS:
+  NAMES: ('RGBNT201')
+  ROOT_DIR: '../../dataSet/'
+
+
+SOLVER:
+  BASE_LR: 0.002
+  WARMUP_ITERS: 10
+  IMS_PER_BATCH: 64
+  CHECKPOINT_PERIOD: 10
+  MAX_EPOCHS: 120
+
+TEST:
+  RE_RANKING: 'no'
+  WEIGHT: './logs/RGBNT201/TOP-ReID_2/TOPReIDbest.pth'
+  NECK_FEAT: 'before'
+  FEAT_NORM: 'yes'
+  MISS: "nothing"
+
+OUTPUT_DIR: './logs/RGBNT201/TOP-ReID_2'
+

@@ -1,0 +1,35 @@
+MODEL:
+  PRETRAIN_CHOICE: 'imagenet'
+  PRETRAIN_PATH_T: '/path/to/your/vitb_16_224_21k.pth'
+  TRANSFORMER_TYPE: 'vit_base_patch16_224'
+  STRIDE_SIZE: [ 16, 16 ]
+  SIE_CAMERA: True
+  RE: 1
+  RE_LAYER: 1
+  DIRECT: 0 # We find that for vehicle reid, indirect is better than direct
+INPUT:
+  SIZE_TRAIN: [ 256, 128 ] # For VehicleID, you can also use [128,256], we simply use the same setting as Person-ReID
+  SIZE_TEST: [ 256, 128 ]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing
+  PADDING: 10
+DATALOADER:
+  SAMPLER: 'softmax_triplet'
+
+DATASETS:
+  NAMES: ('RGBNT100')
+  ROOT_DIR: '/path/to/your/data/'
+
+SOLVER:
+  BASE_LR: 0.009
+  WARMUP_ITERS: 10
+
+TEST:
+  RE_RANKING: 'no'
+  WEIGHT: ''
+  NECK_FEAT: 'before'
+  FEAT_NORM: 'yes'
+  MISS: "nothing"
+
+OUTPUT_DIR: './RGBNT100/TOP-ReID'
+
